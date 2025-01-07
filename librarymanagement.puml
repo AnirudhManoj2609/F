@@ -1,0 +1,41 @@
+@startuml
+
+actor client as u #yellow
+actor serviceprovider as s #yellow
+participant operator  as o #yellow
+database DB as d #yellow
+
+u -> s : requests for book
+activate u
+s -> o : queries client detail and book detail
+activate s
+note right of o
+    Checks if client 
+    has an excess amount 
+    of book 
+end note
+o -> d : queries amount of book
+activate o
+alt "Sufficient books exist?"
+    activate d
+    alt "User doesnt have loads of books taken?"
+        d --> o : retrieves book to operator
+        o --> o : generates a unique id for client and book connection
+        o --> u : generates book to client
+    else
+        d --> o : sends bad client error
+        o --> o : generates a bad client message to client
+        o --> u : sends the bad client message to client
+    end
+    deactivate d
+else
+    activate d
+    d --> o : Insufficient books error
+    o --> o : generates a message to user requesting the arrival of book after a certain amount of time
+    o --> u : sends message to user
+    deactivate d
+end
+deactivate o
+deactivate s
+deactivate u
+@enduml

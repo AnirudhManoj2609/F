@@ -1,0 +1,41 @@
+@startuml
+
+actor Customer as customer #black
+participant ATM as atm #red
+control Bank as bank #yellow
+database DB as storage #blue
+
+customer -> atm : inserts card
+activate atm
+atm -> bank : send user details to bank
+activate bank
+bank --> atm : tells atm to handle transaction details
+deactivate bank
+atm --> customer : prompts transaction details
+deactivate atm
+customer -> atm : enter amount, etc.
+activate atm
+atm -> bank : tells to check if user has money in database
+activate bank
+bank -> storage : requests money
+activate storage
+storage --> bank : sends user money info
+deactivate storage
+
+alt (Sufficient funds?)
+    bank --> atm : Approved
+    activate atm
+    atm --> customer : Dispenses cash
+    bank -> storage : Deducts amount from user balance
+    deactivate atm
+else
+    bank --> atm : Declined
+    activate atm
+    atm --> customer : Insufficient funds
+    deactivate atm
+end
+
+deactivate bank
+deactivate atm
+
+@enduml

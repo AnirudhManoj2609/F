@@ -1,0 +1,29 @@
+@startuml
+
+actor Patient as p #lightblue
+actor Receptionist as r #yellow
+actor Doctor as d #green
+database HospitalDB as db #cyan
+participant AppointmentSystem as app #red
+participant BillingSystem as bill #yellow
+participant TreatmentSystem as treat #orange
+
+p -> r : Requests appointment
+r -> app : Checks available slots
+alt Available slots
+    app -> r : Displays available dates
+    r -> p : Schedules appointment
+    app -> db : Save appointment details
+else No slots available
+    r -> p : Suggests alternative dates
+end
+
+p -> d : Visits doctor for consultation
+d -> db : Retrieves patient medical records
+d -> treat : Prescribes treatment
+treat -> db : Updates treatment details
+d -> bill : Generates treatment bill
+bill -> p : Informs about bill
+bill -> db : Records billing details
+
+@enduml
