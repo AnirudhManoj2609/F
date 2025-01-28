@@ -1,0 +1,54 @@
+@startuml
+left to right direction
+
+actor Customer as C
+actor BankServer as BS
+actor Technician as T
+
+package ATM {
+
+    rectangle frontend {
+        usecase "Insert ATM Card" as F1
+        usecase "Enter PIN" as F2
+        usecase "Select Transaction" as F3
+        usecase "Withdraw Cash" as F4
+        usecase "Check Account Balance" as F5
+        usecase "Deposit Cash" as F6
+        usecase "Print Receipt" as F7
+    }
+
+    rectangle backend {
+        usecase "Validate Card and PIN" as B1
+        usecase "Authenticate Customer" as B2
+        usecase "Update Account Balance" as B3
+        usecase "Record Transaction" as B4
+        usecase "Verify Cash Availability" as B5
+    }
+
+    rectangle maintenance {
+        usecase "Replenish Cash" as M1
+        usecase "Check ATM Status" as M2
+        usecase "Perform Diagnostics" as M3
+    }
+}
+
+' Frontend interactions
+C --> F1
+F1 --> B1
+F2 --> B1
+B1 --> B2
+F3 --> B5
+F4 --> B5
+F4 --> B3
+F4 --> B4
+F5 --> B4
+F6 --> B3
+F6 --> B4
+F7 --> B4
+
+' Backend and Maintenance
+T --> M1
+T --> M2
+T --> M3
+
+@enduml

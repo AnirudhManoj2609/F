@@ -1,0 +1,38 @@
+@startuml
+left to right direction
+
+actor patient as p
+actor doctor as d
+actor receptionist as r
+actor nurse as n
+
+package hospital{
+
+    rectangle frontend{
+        usecase "Enter details" as F1
+        usecase "Assign doctor and info" as F2
+    }
+    rectangle treatment{
+        usecase "Check blood pressure" as T1
+        usecase "Give injection" as T2
+        usecase "Suggest medicines" as T3
+    }
+    rectangle backend{
+        usecase "Send Details" as B1
+        usecase "Save details" as B2
+    }
+}
+
+p-->F1
+F1-->B1
+B1-->r
+r-->B2
+B2-->F2
+F2-->p
+p-->treatment
+n-->T1
+n-->T2
+d-->T3
+
+
+@enduml
