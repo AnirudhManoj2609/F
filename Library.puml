@@ -1,0 +1,40 @@
+@startuml
+|Student|
+start
+    :Enquire for details;
+    |Reception|
+    :Check for Student ID;
+    |Student|
+    :Ask for book;
+    |Database|
+    :Search for book;
+    if(Book Exists in Database) then(Positive)
+        |Student|
+        :Send book shelf location with full details;
+    else(Book doesnt exist)
+        |Database|
+        stop
+    endif
+    :Go to book room;
+    :Do Checking and stuff;
+    while(Book is not found)
+        :Keep searching for book;
+        if(Book is never found) then(Stop searching)
+            stop
+        endif
+    endwhile
+    :Book Found;
+    :Take book to reception;
+    |Reception|
+    if(Student is decent) then(Positive)
+        :Give book;
+        |Database|
+        :List Book with student to Database;
+    else(Tell student to die)
+        :Tell student to leave;
+        stop
+    endif
+    
+stop
+
+@enduml

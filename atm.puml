@@ -1,0 +1,47 @@
+@startuml
+|User|
+start
+    :Insert Card;
+    |ATM|
+    :Prompt to Select Bank;
+    |User|
+    :Selects Bank;
+    |ATM|
+    while(Select Bank)
+        :Bank Selected does not exist;
+        :Re-Enter Bank Details;
+    endwhile
+    :Request sent to Bank Server;
+    |Bank|
+    if(User Exists in Bank Database) then
+        :Prompt for PIN response;
+    else(User Does not exist)
+        :Terminate Request;
+        stop
+    endif
+    |ATM|
+    :Prompt for PIN;
+    |User|
+    :Enters PIN;
+    |ATM|
+    while(Validate PIN)
+        :PIN Entered is Invalid;
+    endwhile
+    |Bank|
+    if(PIN is not related to a User) then(Invalid PIN)
+        stop
+    else(valid PIN)
+    endif
+    |ATM|
+    :Prompt for amount;
+    |User|
+    :Enter Amount;
+    |ATM|
+    while(Amount is being processed)
+        :Amount entered exceeds maximum limit allowed by your Bank;
+    endwhile
+    |Bank|
+    :Transaction occurs and amount received;
+stop
+
+@enduml

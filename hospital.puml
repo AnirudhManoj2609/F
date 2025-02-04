@@ -1,0 +1,37 @@
+@startuml
+|Patient|
+start
+    :Enquire for details;
+    |Reception|
+    :Check for Doctors Available;
+    |Patient|
+    :Give Token Number;
+    while(Token is called)
+        :wait;
+    endwhile
+    |Nurse|
+    :Do Checking and stuff;
+    |Patient|
+    while(Nurse is doing checking)
+        :Obey and coorporate;
+        :Fill required details;
+    endwhile
+    :Enter doctors room;
+    |Doctor|
+    if(Patient is decent) then(Positive)
+        :Treat Patient;
+        :Recommend Medicines;
+    else(Negative)
+        :Tell patient to leave;
+        stop
+    endif
+    |Patient|
+    :Go to medicine store;
+    :Give prescription;
+    |Medicine|
+    :Search for medicines and give;
+    |Patient|
+    :Tell thanks and leave;
+stop
+
+@enduml
